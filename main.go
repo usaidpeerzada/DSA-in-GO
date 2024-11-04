@@ -25,7 +25,13 @@ func main() {
 	// MarkInventory([]string{"Purple shirt", "Black shirt"})
 	// CountTheOnes([][]int{{0, 1, 1, 1, 0}, {0, 1, 0, 1, 0, 1}, {1, 0}})
 	// IsPalindrome("racecar")
-	TwoNumberProducts([]int{1, 2, 3, 4, 5})
+	// TwoNumberProducts([]int{1, 2, 3, 4, 5})
+	// CircularSentences("hey yoly ylh")
+	PartitionEqualSubsetSum([]int{1, 5, 11, 5})
+}
+
+func log(data any) {
+	fmt.Println("-> ", data)
 }
 
 func FindNo(listOfNums []int, num int) bool {
@@ -170,7 +176,7 @@ func SelectionSort(list []int) {
 	fmt.Print("Selection sort ", list)
 }
 
-func InsertionSort(list []int) {
+func InsertionSort(list []int) []int {
 	for i := 1; i < len(list); i++ {
 		temp := list[i]
 		pos := i - 1
@@ -180,7 +186,8 @@ func InsertionSort(list []int) {
 		}
 		list[pos+1] = temp
 	}
-	fmt.Print("InsertionSort ", list)
+	fmt.Println("InsertionSort ", list)
+	return list
 }
 
 func AverageOfEvenNumbers(list []int) int {
@@ -271,4 +278,45 @@ func TwoNumberProducts(list []int) {
 	}
 
 	fmt.Print("TwoNumberProducts ", products)
+}
+
+func CircularSentences(str string) bool {
+	first := str[0]
+	last := str[len(str)-1]
+
+	words := strings.Split(str, " ")
+	if first != last {
+		return false
+	}
+	for i := 0; i < len(words)-1; i++ {
+		currWord := words[i]
+		nextWord := words[i+1]
+		if currWord[len(currWord)-1] != nextWord[0] {
+			log(false)
+			return false
+		}
+	}
+	log(true)
+	return true
+}
+
+func PartitionEqualSubsetSum(list []int) bool {
+	sorted := InsertionSort(list)
+	greatest_num := sorted[len(sorted)-1]
+	total_count := 0
+	// l := []int{}
+	for i := 0; i < len(list); i++ {
+		if list[i] != greatest_num {
+			// l = append(l, list[i])
+			total_count = total_count + list[i]
+		}
+	}
+	// m := []int{greatest_num}
+	if total_count != greatest_num {
+		log("false")
+		return false
+	}
+	log("PartitionEqualSubsetSum")
+	log(total_count)
+	return true
 }
