@@ -27,7 +27,9 @@ func main() {
 	// IsPalindrome("racecar")
 	// TwoNumberProducts([]int{1, 2, 3, 4, 5})
 	// CircularSentences("hey yoly ylh")
-	PartitionEqualSubsetSum([]int{1, 5, 11, 5})
+	// PartitionEqualSubsetSum([]int{1, 5, 11, 5})
+	// NoOfChars([]string{"a", "a", "b", "b", "b", "c", "c", "d"})
+	NoOfCharStrings("abccde")
 }
 
 func log(data any) {
@@ -319,4 +321,42 @@ func PartitionEqualSubsetSum(list []int) bool {
 	log("PartitionEqualSubsetSum")
 	log(total_count)
 	return true
+}
+
+func NoOfChars(list []string) {
+	l := []string{}
+	count := 1
+	current := list[0]
+	for i := 1; i < len(list); i++ {
+		if list[i] == current {
+			count++
+		} else {
+			l = append(l, current, strconv.Itoa(count))
+			current = list[i]
+			count = 1
+		}
+	}
+	l = append(l, current, strconv.Itoa(count))
+	fmt.Println(l)
+}
+
+func NoOfCharStrings(input string) string {
+	if len(input) == 0 {
+		return ""
+	}
+	var result string
+	current := input[0]
+	count := 1
+	for i := 1; i < len(input); i++ {
+		if input[i] == current {
+			count++
+		} else {
+			result += fmt.Sprintf("%d%c", count, current)
+			current = input[i]
+			count = 1
+		}
+	}
+	result += fmt.Sprintf("%d%c", count, current)
+	log(result)
+	return result
 }
