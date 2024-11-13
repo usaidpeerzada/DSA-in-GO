@@ -29,7 +29,11 @@ func main() {
 	// CircularSentences("hey yoly ylh")
 	// PartitionEqualSubsetSum([]int{1, 5, 11, 5})
 	// NoOfChars([]string{"a", "a", "b", "b", "b", "c", "c", "d"})
-	NoOfCharStrings("abccde")
+	// NoOfCharStrings("AABBBCCDDDD")
+	// EncodeStringChars("AABBBCCDDDD")
+	// DecodeStringChars("2A3B2C4D")
+	// TwoSumProblemBrute([]int{1, 2, 3, 4, 5, 6}, 9)
+	TwoSumProblemOp([]int{1, 2, 3, 4, 5, 6}, 9)
 }
 
 func log(data any) {
@@ -359,4 +363,71 @@ func NoOfCharStrings(input string) string {
 	result += fmt.Sprintf("%d%c", count, current)
 	log(result)
 	return result
+}
+
+func EncodeStringChars(str string) string {
+	var encoded strings.Builder
+	count := 1
+
+	for i := 0; i < len(str); i++ {
+		if i+1 < len(str) && str[i] == str[i+1] {
+			count++
+		} else {
+			encoded.WriteString(strconv.Itoa(count))
+			encoded.WriteByte(str[i])
+			count = 1
+		}
+	}
+	log(encoded.String())
+	return encoded.String()
+}
+
+func DecodeStringChars(str string) string {
+	var decoded strings.Builder
+	var count int
+
+	for i := 0; i < len(str); i++ {
+		if str[i] >= '0' && str[i] <= '9' {
+			count = count*10 + int(str[i]-'0')
+		} else {
+			decoded.WriteString(strings.Repeat(string(str[i]), count))
+			count = 0
+		}
+	}
+	log(decoded.String())
+	return decoded.String()
+}
+
+// two sum problem [1, 2, 3] - 5 = [2, 3]
+
+func TwoSumProblemBrute(list []int, target int) []int {
+	l := []int{}
+	for i := 0; i < len(list); i++ {
+		for j := i + 1; j < len(list); j++ {
+			if list[i]+list[j] == target {
+				l = append(l, list[i], list[j])
+				log(l)
+				return l
+			}
+		}
+	}
+	return l
+}
+
+func TwoSumProblemOp(list []int, target int) []int {
+	low := 0
+	high := len(list) - 1
+
+	for low < high {
+		sum := list[low] + list[high]
+		if sum == target {
+			log([]int{list[low], list[high]})
+			return []int{list[low], list[high]}
+		} else if sum < target {
+			low++
+		} else {
+			high--
+		}
+	}
+	return []int{}
 }
